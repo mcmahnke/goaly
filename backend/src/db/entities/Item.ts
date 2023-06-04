@@ -1,21 +1,29 @@
-import { Entity, Property, ManyToOne, Cascade } from "@mikro-orm/core";
+import {Entity, Property, ManyToOne, Cascade, Collection, ManyToMany, OneToMany} from "@mikro-orm/core";
 // Control + click these imports to view their actual code/type
 // Also see identity functions here - https://betterprogramming.pub/typescript-generics-90be93d8c292
 import type {Ref, Rel} from "@mikro-orm/core";
 import { GoalyBaseEntity } from "./GoalyBaseEntity.js";
 import { User } from "./User.js";
+import {SoftDeletable} from "mikro-orm-soft-delete";
+import {ItemsOwned} from "./ItemsOwned.js";
 
+@SoftDeletable(() => Item, "deleted_at", () => new Date())
 @Entity()
-export class Message extends GoalyBaseEntity {
-
-	// The person who performed the match/swiped right
-	@ManyToOne()
-	sender!: Ref<User>;
-
-	// The account whose profile was swiped-right-on
-	@ManyToOne('User')
-	receiver!: Rel<User>;
+export class Item extends GoalyBaseEntity {
 
 	@Property()
-	message!: string;
+	name!: string;
+
+	@Property()
+	price!: number;
+
+	@Property()
+	description!: string;
+
+	@OneToMany(
+		() => ItemsOwned,
+		item => item.item,
+		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
+	)
+	owned_by!: Collection<User>;
 }

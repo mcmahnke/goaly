@@ -1,44 +1,44 @@
 import type { Dictionary, EntityManager } from "@mikro-orm/core";
 import { Seeder } from '@mikro-orm/seeder';
-import { Message } from "../entities/Message.js";
+import { Item } from "../entities/Item.js";
 import {User} from "../entities/User.js";
 
-export class MessageSeeder extends Seeder {
+export class ItemSeeder extends Seeder {
 	async run(em: EntityManager, context: Dictionary): Promise<void> {
 
-		const msgRepo = em.getRepository(Message);
+		const itmRepo = em.getRepository(Item);
 
 		// https://mikro-orm.io/docs/seeding#shared-context
 
-		msgRepo.create({
-			sender: context.user1,
-			receiver: context.user2,
-			message: "Test message 1",
+		itmRepo.create({
+			name: "Red",
+			price: 2,
+			description: "A rad red color",
 		});
-		msgRepo.create({
-			sender: context.user2,
-			receiver: context.user1,
-			message: "Test message 2",
+		itmRepo.create({
+			name: "Orange",
+			price: 2,
+			description: "A rad orange color",
 		});
-		msgRepo.create({
-			sender: context.user3,
-			receiver: context.user2,
-			message: "Test message 3",
+		itmRepo.create({
+			name: "Yellow",
+			price: 2,
+			description: "A rad yellow color",
 		});
-		msgRepo.create({
-			sender: context.user1,
-			receiver: context.user3,
-			message: "Test message 4",
+		itmRepo.create({
+			name: "Green",
+			price: 2,
+			description: "A rad green color",
 		});
-		msgRepo.create({
-			sender: context.user2,
-			receiver: context.user3,
-			message: "Test message 5",
+		itmRepo.create({
+			name: "Blue",
+			price: 2,
+			description: "A rad blue color",
 		});
-		msgRepo.create({
-			sender: context.user3,
-			receiver: context.user1,
-			message: "Test message 6",
+		itmRepo.create({
+			name: "Purple",
+			price: 2,
+			description: "A rad purple color",
 		});
 
 	}

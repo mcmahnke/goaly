@@ -12,7 +12,7 @@ export function UserRoutesInit(app: FastifyInstance) {
 
 	// Route that returns all users who ARE NOT SOFT DELETED
 	app.get("/users",
-		{ onRequest: [app.auth]},
+		//{ onRequest: [app.auth]},
 		async (req, reply) => {
 		try {
 			const theUser = await req.em.find(User, {});
@@ -25,7 +25,7 @@ export function UserRoutesInit(app: FastifyInstance) {
 	// User CRUD
 	// Refactor note - We DO use email still for creation!  We can't know the ID yet
 	app.post<{ Body: ICreateUsersBody }>("/users", async (req, reply) => {
-		const { name, email, password, petType } = req.body;
+		const { name, email, password, wins, spendable } = req.body;
 
 		try {
 			const hashedPw = await bcrypt.hash(password, 10);
@@ -33,7 +33,8 @@ export function UserRoutesInit(app: FastifyInstance) {
 				name,
 				email,
 				password: hashedPw,
-				petType,
+				wins,
+				spendable,
 				// We'll only create Admins manually!
 				role: UserRole.USER
 			});
@@ -59,11 +60,12 @@ export function UserRoutesInit(app: FastifyInstance) {
 
 	// UPDATE
 	app.put<{ Body: IUpdateUsersBody }>("/users", async (req, reply) => {
-		const { name, id, petType } = req.body;
+		const { name, id, wins, spendable} = req.body;
 
 		const userToChange = await req.em.findOneOrFail(User, id, {strict: true});
 		userToChange.name = name;
-		userToChange.petType = petType;
+		userToChange.wins = wins;
+		userToChange.spendable = spendable;
 
 		// Reminder -- this is how we persist our JS object changes to the database itself
 		await req.em.flush();

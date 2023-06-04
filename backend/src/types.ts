@@ -2,17 +2,33 @@ export type ICreateUsersBody = {
 	name: string,
 	email: string,
 	password: string,
-	petType: string
+	wins: number,
+	spendable: number,
 }
+
+//name: "Gamer",
+// 			email: "email@email.com",
+// 			password: hashedPw,
+// 			wins: 0,
+// 			spendable: 0,
+// 			role: UserRole.ADMIN,
 
 export type IUpdateUsersBody = {
 	name: string,
 	id: number,
-	petType: string
+	wins: number,
+	spendable: number,
 }
 
-export type ICreateMessage = {
-	sender_id: number,
-	receiver_id: number,
-	message: string,
+export type ICreateItemBody = {
+	name: string,
+	price: number,
+	description: string,
+}
+
+export type IUpdateItemBody = {
+	id: number,
+	name: string,
+	price: number,
+	description: string
 }
