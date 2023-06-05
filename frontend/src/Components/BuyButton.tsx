@@ -8,7 +8,7 @@
  */
 import { useState } from "react";
 
-export const ExampleButton = () => {
+export const BuyButton = () => {
 	const [clicks, setClicks] = useState(0);
 
 	return (
