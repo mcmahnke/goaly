@@ -1,43 +1,56 @@
-import { AuthContext } from "@/App.tsx";
 import { Profile } from "@/Components/Profile.tsx";
-import InitialState, { getRandomProfile } from "@/InitialState.ts";
 import { useAuth } from "@/Services/Auth.tsx";
 import { useContext, useEffect, useState } from "react";
+import {ItemType} from "@/GoalyTypes.js";
+import axios from "axios";
+import {BuyButton} from "@/Components/BuyButton.tsx";
+import {ItemPostService} from "@/Services/ItemService.tsx";
+import { useAuth0 } from "@auth0/auth0-react";
 
-export const Match = () => {
+export const Shop = () => {
 
-	const [currentProfile, setCurrentProfile] = useState(InitialState.currentProfile);
-	const [likeHistory, setLikeHistory] = useState(InitialState.likeHistory);
-	const auth = useAuth();
+	const [currentItem, setCurrentItem] = useState<ItemType>();
+	//const [itemsOwned, setItemsOwned] = useState(itemsOwnedService);
+	const [items, setItems] = useState([]);
+	const { user } = useAuth0();
 
-	const onLikeButtonClick = () => {
-		const newLikeHistory = [...likeHistory, currentProfile];
-		setLikeHistory(newLikeHistory);
-		const newProfile = getRandomProfile();
-		setCurrentProfile(newProfile);
-		console.log("Added new liked profile");
+	const onBuyButtonClick = (item_id: number) => {
+		//const newItemsOwned = [...itemsOwned, currentItem];
+		//setItemsOwned(newItemsOwned);
+		//ItemPostService(user.userId, item_id);
 	};
 
-	const onPassButtonClick = () => {
-		const newProfile = getRandomProfile();
-		setCurrentProfile(newProfile);
-	};
 
 	useEffect(() => {
-		console.log("Match Rerendered.");
+		console.log("Shop Rerendered.");
 	});
 
-	const profile = <Profile
-		{...currentProfile}
-		onLikeButtonClick={onLikeButtonClick}
-		onPassButtonClick={onPassButtonClick}
-	/>;
+		useEffect(() => {
+			const getItems= async () => {
+				const itemsRes = await axios.get("http://localhost:8080/items");
+				return itemsRes.data;
+			};
 
-	return (
-		<>
-			<div>"MATCH PAGE"</div>
-			<p> User logged in as {auth.token}</p>
-			{profile}
-		</>
-	);
+			getItems().then(setItems);
+		}, []);
+
+		return (
+			<div>
+				<h2>Items:</h2>
+				{items ? (
+					<ul>
+						{items.map((item: { id: number; name: string; price: number; description: string }) => (
+							<li key={item.name}>
+								{" "}
+								{item.description} - {item.price}{" "}
+								<BuyButton
+									item_id={item.id}
+									onBuyButtonClick={onBuyButtonClick}
+								/>
+							</li>
+						))}
+					</ul>
+				) : null}
+			</div>
+		);
 };

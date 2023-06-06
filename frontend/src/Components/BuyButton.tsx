@@ -6,19 +6,23 @@
  * You “use” React features at the top of your component similar to how you “import” modules
  * at the top of your file.
  */
+import {useAuth0} from "@auth0/auth0-react";
 import { useState } from "react";
 
-export const BuyButton = () => {
-	const [clicks, setClicks] = useState(0);
+export type buyButtonProps = {
+	item_id: number,
+	onBuyButtonClick: () => void,
+}
 
+export const BuyButton = (props) => {
+	const { item_id, onBuyButtonClick } = props;
+	
 	return (
 		<button
 			onClick={() => {
-				console.log("Clicked!");
-				setClicks(clicks + 1);
+				onBuyButtonClick(item_id);
 			}}
 		>
-			Clicks: {clicks}
 		</button>
 	);
 };

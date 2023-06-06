@@ -43,18 +43,18 @@ export class User extends GoalyBaseEntity {
 	)
 	items_owned!: Collection<Item>;
 /*	@OneToMany(
-		() => Match,
+		() => Shop,
 		match => match.owner,
 		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
 	)
-	matches!: Collection<Match>;
+	matches!: Collection<Shop>;
 
 	@OneToMany(
-		() => Match,
+		() => Shop,
 		match => match.matchee,
 		{cascade: [Cascade.PERSIST, Cascade.REMOVE]}
 	)
-	matched_by!: Collection<Match>;
+	matched_by!: Collection<Shop>;
 
 	// Orphan removal used in our Delete All Sent Messages route to single-step remove via Collection
 	@OneToMany(
