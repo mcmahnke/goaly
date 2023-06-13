@@ -9,7 +9,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export const Shop = () => {
 
-	const [currentItem, setCurrentItem] = useState<ItemType>();
+	const [currentItem, setCurrentItem] = useState({});
 	const [itemsOwned, setItemsOwned] = useState([]);
 	const [items, setItems] = useState([]);
 	const { user } = useAuth0();
@@ -21,6 +21,7 @@ export const Shop = () => {
 			const userRes = response.data;
 		
 			if (userRes.spendable >= price) {
+				setCurrentItem({item: item_id, owner: userRes.id});
 				const newItemsOwned = [...itemsOwned, currentItem];
 				setItemsOwned(newItemsOwned);
 				await httpClient.put("/users", { email: userRes.email, name: userRes.name, wins: userRes.wins, spendable: (userRes.spendable - price), equipped: userRes.equipped });
@@ -61,7 +62,7 @@ export const Shop = () => {
 	
 	useEffect(() => {
 		console.log("Shop Rerendered.");
-	});
+	}, [itemsOwned]);
 
 		useEffect(() => {
 			const getItems= async () => {

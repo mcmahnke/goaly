@@ -75,10 +75,6 @@ export function ItemRoutesInit(app: FastifyInstance) {
 		try {
 			// Authenticate my user's role
 			const me = await req.em.findOneOrFail(User, my_id, {strict: true});
-			// Check passwords match
-			if (me.password !== password) {
-				return reply.status(401).send();
-			}
 
 			// Make sure the requester is an Admin
 			if (me.role === UserRole.USER) {
