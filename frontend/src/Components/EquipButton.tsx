@@ -1,5 +1,3 @@
-
-
 export type equipButtonProps = {
 	item_id: number;
 	onEquipButtonClick: (item_id) => void;

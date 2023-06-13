@@ -1,8 +1,6 @@
 import {EquipButton} from "@/Components/EquipButton.tsx";
-import { Profile } from "@/Components/Profile.tsx";
-import { useAuth } from "@/Services/Auth.tsx";
 import {httpClient} from "@/Services/HttpClient.tsx";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {ItemType} from "@/GoalyTypes.js";
 import axios from "axios";
 import {BuyButton} from "@/Components/BuyButton.tsx";

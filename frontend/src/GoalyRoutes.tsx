@@ -1,11 +1,7 @@
-import {LogoutButton} from "@/Components/LogoutButton.tsx";
-import {LoginButton} from "@/Components/LoginButton.tsx";
-import {httpClient} from "@/Services/HttpClient.tsx";
 import {useAuth0} from "@auth0/auth0-react";
 import {Link, Route, Routes} from "react-router-dom";
 import {Home} from "@/Components/HomePage.tsx";
 import {Shop} from "@/Components/Shop.tsx";
-import {CreateProfile} from "@/Components/CreateProfile.tsx";
 import {ProtectedRoute} from "@/Components/ProtectedRoute.tsx";
 import {Play} from "@/Components/Play.tsx";
 import {Leaderboard} from "@/Components/Leaderboard.tsx";
