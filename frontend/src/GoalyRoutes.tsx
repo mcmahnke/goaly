@@ -8,11 +8,12 @@ import {Shop} from "@/Components/Shop.tsx";
 import {CreateProfile} from "@/Components/CreateProfile.tsx";
 import {ProtectedRoute} from "@/Components/ProtectedRoute.tsx";
 import {Play} from "@/Components/Play.tsx";
+import {Leaderboard} from "@/Components/Leaderboard.tsx";
 
 
 export function GoalyRouter() {
   
-    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { user, isAuthenticated, getAccessTokenSilently, loginWithRedirect, logout } = useAuth0();
     
     return (
 
@@ -25,15 +26,15 @@ export function GoalyRouter() {
                                 <li><Link to="/">Home</Link></li>
                                 <li><Link to="/play">Play</Link></li>
                                 <li><Link to="/shop">Shop</Link></li>
+                                <li><Link to="/leaderboard">Leaderboard</Link></li>
                                 {isAuthenticated ? (
                                     <>
-                                      <li><Link to="/logout">Logout</Link></li>
+                                      <li><Link to="/logout" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } } ) }>Logout</Link></li>
                                       <h2>{user.nickname}</h2>
                                     </>
                                 ) : (
                                     <>
-                                        <li><Link to="/login"> Login</Link></li>
-                                        <li><Link to="/create"> Create Account</Link> </li>
+                                        <li><Link to="/login" onClick={() => loginWithRedirect()}> Login</Link></li>
                                     </>
                                 )}</ul>
 
@@ -43,10 +44,8 @@ export function GoalyRouter() {
 
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/leaderboard" element={<Leaderboard />} />
                     <Route path="/play" element={<ProtectedRoute><Play /></ProtectedRoute>} />
-                    <Route path="/create" element={<CreateProfile />}/>
-                    <Route path="/login" element={<LoginButton />} />
-                    <Route path="/logout" element={<LogoutButton />} />
                     <Route path="/shop" element={<ProtectedRoute><Shop /></ProtectedRoute>} />
                 </Routes>
             </div>
