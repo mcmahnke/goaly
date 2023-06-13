@@ -13,12 +13,6 @@ export const Leaderboard = () => {
 			return usersRes.data.sort((a, b) => parseInt(b.wins) - parseInt(a.wins));
 		};
 		
-		// const sortUsers = async () => {
-		// 	const sorted = users.sort((a, b) => parseInt(b.wins) - parseInt(a.wins));
-		// 	console.log(sorted);
-		// 	return sorted;
-		// };
-		
 		getUsers().then(setUsers);
 	}, [users]);
 	
