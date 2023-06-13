@@ -12,11 +12,13 @@ export function ItemsOwnedRoutesInit(app: FastifyInstance) {
 	 the entity from the database until you attempt to access its properties. This is used when
 	 you just need a reference to an entity in order to establish a relationship with another entity.
 	 */
-	app.post<{ Body: { user_id: number; item_id: number } }>("/items/owned", async (req, reply) => {
-		const { user_id, item_id } = req.body;
+	app.post<{ Body: { email: string; item_id: number } }>("/items/owned", async (req, reply) => {
+		const { email, item_id } = req.body;
 
 		try {
-			const owned_by = await req.em.getReference(User, user_id);
+			const user = await req.em.findOneOrFail(User, { email: email }, { strict: true });
+			const id = user.id;
+			const owned_by = await req.em.getReference(User, id);
 			// do the same for the matcher/owner
 			const item = await req.em.getReference(Item, item_id);
 
@@ -33,11 +35,12 @@ export function ItemsOwnedRoutesInit(app: FastifyInstance) {
 		}
 	});
 
-	app.search<{ Body: { user_id: number } }>("/items/owned", async (req, reply) => {
-		const { user_id } = req.body;
+	app.search<{ Body: { email: string } }>("/items/owned", async (req, reply) => {
+		const { email } = req.body;
 
 		try {
-			const ownerEntity = await req.em.getReference(User, user_id);
+			const user = await req.em.findOneOrFail(User, { email: email }, { strict: true });
+			const ownerEntity = await req.em.getReference(User, user.id);
 			const items = await req.em.find(ItemsOwned, { owned_by: ownerEntity });
 			return reply.send(items);
 		} catch (err) {

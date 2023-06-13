@@ -1,5 +1,7 @@
+import {EquipButton} from "@/Components/EquipButton.tsx";
 import { Profile } from "@/Components/Profile.tsx";
 import { useAuth } from "@/Services/Auth.tsx";
+import {httpClient} from "@/Services/HttpClient.tsx";
 import { useContext, useEffect, useState } from "react";
 import {ItemType} from "@/GoalyTypes.js";
 import axios from "axios";
@@ -10,17 +12,55 @@ import { useAuth0 } from "@auth0/auth0-react";
 export const Shop = () => {
 
 	const [currentItem, setCurrentItem] = useState<ItemType>();
-	//const [itemsOwned, setItemsOwned] = useState(itemsOwnedService);
+	const [itemsOwned, setItemsOwned] = useState([]);
 	const [items, setItems] = useState([]);
 	const { user } = useAuth0();
 
-	const onBuyButtonClick = (item_id: number) => {
-		//const newItemsOwned = [...itemsOwned, currentItem];
-		//setItemsOwned(newItemsOwned);
-		//ItemPostService(user.userId, item_id);
+	const onBuyButtonClick = async (item_id: number, price: number) => {
+		try {
+			const response = await httpClient.search("/users", { email: user.email });
+			console.log("Search succeeded: ", response.data);
+			const userRes = response.data;
+		
+			if (userRes.spendable >= price) {
+				const newItemsOwned = [...itemsOwned, currentItem];
+				setItemsOwned(newItemsOwned);
+				await httpClient.put("/users", { email: userRes.email, name: userRes.name, wins: userRes.wins, spendable: (userRes.spendable - price), equipped: userRes.equipped });
+				await ItemPostService.send(user.email, item_id);
+			}
+			else {
+				console.log("You can't afford that!");
+			}
+		}
+		catch(err) {
+			console.log("Request failed: ", err);
+		}
 	};
-
-
+	
+	const onEquipButtonClick = async (item_id: number) => {
+		try {
+			const response = await httpClient.search("/users", { email: user.email });
+			console.log("Search succeeded: ", response.data);
+			const userRes = response.data;
+			
+			if (userRes.equipped != item_id) {
+				await httpClient.put("/users", { email: userRes.email, name: userRes.name, wins: userRes.wins, spendable: userRes.spendable, equipped: item_id });
+				console.log("Equip successful!");
+			}
+		}
+		catch(err) {
+			console.log("Request failed: ", err);
+		}
+	};
+	
+	const handleCheck = (item_id: number) => {
+		try {
+			return itemsOwned.find(e => e.item  ===  item_id);
+		} catch(err) {
+			return false;
+		}
+	};
+	
 	useEffect(() => {
 		console.log("Shop Rerendered.");
 	});
@@ -30,9 +70,23 @@ export const Shop = () => {
 				const itemsRes = await axios.get("http://localhost:8080/items");
 				return itemsRes.data;
 			};
+			
+			async function getItemsOwned() {
+				try {
+					console.log(user.email);
+					const response = await httpClient.search("/items/owned", { email: user.email });
+					console.log(response.data);
+					return response.data;
+				} catch (err) {
+					console.error("Error getting owned items: ", err);
+					return [];
+				}
+			}
 
 			getItems().then(setItems);
-		}, []);
+			getItemsOwned().then(setItemsOwned);
+			
+		}, [user]);
 
 		return (
 			<div>
@@ -42,11 +96,23 @@ export const Shop = () => {
 						{items.map((item: { id: number; name: string; price: number; description: string }) => (
 							<li key={item.name}>
 								{" "}
-								{item.description} - {item.price}{" "}
-								<BuyButton
-									item_id={item.id}
-									onBuyButtonClick={onBuyButtonClick}
-								/>
+								{handleCheck(item.id) ?
+									<>
+										{item.description}{" "}
+										<EquipButton
+											item_id={item.id}
+											onEquipButtonClick={onEquipButtonClick}
+										/>
+									</>:
+									<>
+										{item.description} - {item.price}{" "}
+										
+										<BuyButton
+											item_id={item.id}
+											price={item.price}
+											onBuyButtonClick={onBuyButtonClick}
+										/>
+									</>}
 							</li>
 						))}
 					</ul>

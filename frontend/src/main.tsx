@@ -9,12 +9,13 @@ const rootContainer: HTMLElement = document.getElementById("root") as HTMLElemen
 ReactDOM.createRoot(rootContainer).render(
 	<React.StrictMode>
 		<Auth0Provider
-			domain="dev-jgk07h16kswx1avk.us.auth0.com"
-			clientId="99OYxyrtsFjHuNd3NYsbBt7bC5M0vB8P"
+			domain={import.meta.env.AUTH0_DOMAIN}
+			clientId={import.meta.env.AUTH0_CLIENT_ID}
 			useRefreshTokens={true}
 			useRefreshTokensFallback={false}
 			authorizationParams={{
-				redirect_uri: "http://localhost:5173/"
+				audience: "http://localhost:8080",
+				redirect_uri: "http://localhost:5173"
 			}}
 		>
 			<App />

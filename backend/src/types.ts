@@ -1,9 +1,9 @@
 export type ICreateUsersBody = {
 	name: string,
 	email: string,
-	password: string,
 	wins: number,
 	spendable: number,
+	equipped: number,
 }
 
 //name: "Gamer",
@@ -14,10 +14,11 @@ export type ICreateUsersBody = {
 // 			role: UserRole.ADMIN,
 
 export type IUpdateUsersBody = {
+	email: string,
 	name: string,
-	id: number,
 	wins: number,
 	spendable: number,
+	equipped: number,
 }
 
 export type ICreateItemBody = {

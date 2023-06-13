@@ -23,13 +23,13 @@ export class User extends GoalyBaseEntity {
 	name!: string
 
 	@Property()
-	password!: string;
-
-	@Property()
 	wins!: number;
 
 	@Property()
 	spendable!: number;
+	
+	@Property()
+	equipped!: number;
 
 	@Enum(() => UserRole)
 	role!: UserRole; // string enum

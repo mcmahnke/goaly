@@ -1,10 +1,10 @@
-import { useAuth } from "@/Services/Auth.tsx";
+import {useAuth0} from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 
 export const ProtectedRoute = ({children}) => {
-	const {token} = useAuth();
+	const { isAuthenticated} = useAuth0();
 
-	if (!token) {
+	if (!isAuthenticated) {
 		return <Navigate to="/login" replace />;
 	}
 

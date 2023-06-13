@@ -10,19 +10,21 @@ import {useAuth0} from "@auth0/auth0-react";
 import { useState } from "react";
 
 export type buyButtonProps = {
-	item_id: number,
-	onBuyButtonClick: () => void,
+	item_id: number;
+	price: number;
+	onBuyButtonClick: (item_id, price) => void;
 }
 
-export const BuyButton = (props) => {
-	const { item_id, onBuyButtonClick } = props;
+export const BuyButton = (props: buyButtonProps) => {
+	const { item_id, price, onBuyButtonClick } = props;
 	
 	return (
 		<button
 			onClick={() => {
-				onBuyButtonClick(item_id);
+				onBuyButtonClick(item_id, price);
+				
 			}}
-		>
+		> Buy
 		</button>
 	);
 };

@@ -1,19 +1,19 @@
 import {LogoutButton} from "@/Components/LogoutButton.tsx";
 import {LoginButton} from "@/Components/LoginButton.tsx";
+import {httpClient} from "@/Services/HttpClient.tsx";
 import {useAuth0} from "@auth0/auth0-react";
 import {Link, Route, Routes} from "react-router-dom";
 import {Home} from "@/Components/HomePage.tsx";
 import {Shop} from "@/Components/Shop.tsx";
-import {Login} from "@/Components/Login.tsx";
 import {CreateProfile} from "@/Components/CreateProfile.tsx";
 import {ProtectedRoute} from "@/Components/ProtectedRoute.tsx";
-import {Logout} from "@/Components/Logout.tsx";
 import {Play} from "@/Components/Play.tsx";
 
 
 export function GoalyRouter() {
   
-    const { isAuthenticated } = useAuth0();
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    
     return (
 
         <div className={"doggrfancy"}>
@@ -26,7 +26,10 @@ export function GoalyRouter() {
                                 <li><Link to="/play">Play</Link></li>
                                 <li><Link to="/shop">Shop</Link></li>
                                 {isAuthenticated ? (
-                                    <li><Link to="/logout">Logout</Link></li>
+                                    <>
+                                      <li><Link to="/logout">Logout</Link></li>
+                                      <h2>{user.nickname}</h2>
+                                    </>
                                 ) : (
                                     <>
                                         <li><Link to="/login"> Login</Link></li>
