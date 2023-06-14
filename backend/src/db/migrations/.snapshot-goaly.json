@@ -45,15 +45,6 @@
           "length": 6,
           "mappedType": "datetime"
         },
-        "email": {
-          "name": "email",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
         "name": {
           "name": "name",
           "type": "varchar(255)",
@@ -63,52 +54,30 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "password": {
-          "name": "password",
+        "price": {
+          "name": "price",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "description": {
+          "name": "description",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "mappedType": "string"
-        },
-        "pet_type": {
-          "name": "pet_type",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "string"
-        },
-        "role": {
-          "name": "role",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "enumItems": [
-            "Admin",
-            "User"
-          ],
-          "mappedType": "enum"
         }
       },
-      "name": "users",
+      "name": "item",
       "schema": "public",
       "indexes": [
         {
-          "columnNames": [
-            "email"
-          ],
-          "composite": false,
-          "keyName": "users_email_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
-          "keyName": "users_pkey",
+          "keyName": "item_pkey",
           "columnNames": [
             "id"
           ],
@@ -161,39 +130,79 @@
           "length": 6,
           "mappedType": "datetime"
         },
-        "sender_id": {
-          "name": "sender_id",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "receiver_id": {
-          "name": "receiver_id",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
-        },
-        "message": {
-          "name": "message",
+        "email": {
+          "name": "email",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "mappedType": "string"
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "wins": {
+          "name": "wins",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "spendable": {
+          "name": "spendable",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "equipped": {
+          "name": "equipped",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "enumItems": [
+            "Admin",
+            "User"
+          ],
+          "mappedType": "enum"
         }
       },
-      "name": "message",
+      "name": "users",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "message_pkey",
+          "columnNames": [
+            "email"
+          ],
+          "composite": false,
+          "keyName": "users_email_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "users_pkey",
           "columnNames": [
             "id"
           ],
@@ -203,37 +212,12 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {
-        "message_sender_id_foreign": {
-          "constraintName": "message_sender_id_foreign",
-          "columnNames": [
-            "sender_id"
-          ],
-          "localTableName": "public.message",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "public.users",
-          "updateRule": "cascade"
-        },
-        "message_receiver_id_foreign": {
-          "constraintName": "message_receiver_id_foreign",
-          "columnNames": [
-            "receiver_id"
-          ],
-          "localTableName": "public.message",
-          "referencedColumnNames": [
-            "id"
-          ],
-          "referencedTableName": "public.users",
-          "updateRule": "cascade"
-        }
-      }
+      "foreignKeys": {}
     },
     {
       "columns": {
-        "owner_id": {
-          "name": "owner_id",
+        "owned_by_id": {
+          "name": "owned_by_id",
           "type": "int",
           "unsigned": false,
           "autoincrement": false,
@@ -241,44 +225,24 @@
           "nullable": false,
           "mappedType": "integer"
         },
-        "matchee_id": {
-          "name": "matchee_id",
+        "item_id": {
+          "name": "item_id",
           "type": "int",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "mappedType": "integer"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamptz(0)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "length": 6,
-          "mappedType": "datetime"
-        },
-        "deleted_at": {
-          "name": "deleted_at",
-          "type": "timestamptz(0)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "length": 6,
-          "mappedType": "datetime"
         }
       },
-      "name": "match",
+      "name": "items_owned",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "match_pkey",
+          "keyName": "items_owned_pkey",
           "columnNames": [
-            "owner_id",
-            "matchee_id"
+            "owned_by_id",
+            "item_id"
           ],
           "composite": true,
           "primary": true,
@@ -287,28 +251,28 @@
       ],
       "checks": [],
       "foreignKeys": {
-        "match_owner_id_foreign": {
-          "constraintName": "match_owner_id_foreign",
+        "items_owned_owned_by_id_foreign": {
+          "constraintName": "items_owned_owned_by_id_foreign",
           "columnNames": [
-            "owner_id"
+            "owned_by_id"
           ],
-          "localTableName": "public.match",
+          "localTableName": "public.items_owned",
           "referencedColumnNames": [
             "id"
           ],
           "referencedTableName": "public.users",
           "updateRule": "cascade"
         },
-        "match_matchee_id_foreign": {
-          "constraintName": "match_matchee_id_foreign",
+        "items_owned_item_id_foreign": {
+          "constraintName": "items_owned_item_id_foreign",
           "columnNames": [
-            "matchee_id"
+            "item_id"
           ],
-          "localTableName": "public.match",
+          "localTableName": "public.items_owned",
           "referencedColumnNames": [
             "id"
           ],
-          "referencedTableName": "public.users",
+          "referencedTableName": "public.item",
           "updateRule": "cascade"
         }
       }

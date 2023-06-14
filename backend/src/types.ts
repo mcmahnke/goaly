@@ -1,18 +1,28 @@
 export type ICreateUsersBody = {
 	name: string,
 	email: string,
-	password: string,
-	petType: string
+	wins: number,
+	spendable: number,
+	equipped: number,
 }
 
 export type IUpdateUsersBody = {
+	email: string,
 	name: string,
-	id: number,
-	petType: string
+	wins: number,
+	spendable: number,
+	equipped: number,
 }
 
-export type ICreateMessage = {
-	sender_id: number,
-	receiver_id: number,
-	message: string,
+export type ICreateItemBody = {
+	name: string,
+	price: number,
+	description: string,
+}
+
+export type IUpdateItemBody = {
+	id: number,
+	name: string,
+	price: number,
+	description: string
 }

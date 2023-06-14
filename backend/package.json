@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "0.0.1",
-  "description": "Doggr's main backend",
+  "description": "Goaly's main backend",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
     "migration:freshSeed": "pnpm mikro-orm-esm migration:fresh --seed",
     "seed:create": "pnpm mikro-orm-esm seeder:create ",
     "seed:run": "pnpm mikro-orm-esm seeder:run",
-    "startProd": "pnpm migration:fresh && pnpm start"
+    "startProd": "pnpm migration:freshSeed && pnpm start"
   },
   "scriptsComments": {
     "dev": "Runs watcher dev server, see https://github.com/nodejs/node/issues/30810#issuecomment-1446093458 for no-warnings",
@@ -50,6 +50,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "fastify": "^4.15.0",
+    "fastify-auth0-verify": "^1.2.0",
     "fastify-plugin": "^4.5.0",
     "jsonwebtoken": "^9.0.0",
     "mikro-orm-soft-delete": "^0.1.0"
