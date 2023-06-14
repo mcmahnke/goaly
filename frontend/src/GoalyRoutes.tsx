@@ -13,24 +13,23 @@ export function GoalyRouter() {
     
     return (
 
-        <div className={"doggrfancy"}>
-                <nav className="bg-blue-800 rounded-b shadow-lg mb-4">
+        <div className="goalyfancy">
+                <nav className="bg-sky-600 rounded-b-lg shadow-lg mb-4">
                     <div className="navbar justify-center">
                         <div className={"navbar-center lg:flex"}>
 
-                            <ul className={"menu menu-horizontal"}>
-                                <li><Link to="/">Home</Link></li>
-                                <li><Link to="/play">Play</Link></li>
-                                <li><Link to="/shop">Shop</Link></li>
-                                <li><Link to="/leaderboard">Leaderboard</Link></li>
+                            <ul className={"menu menu-horizontal p-0 text-xl"}>
+                                <li><Link to="/" className="no-underline text-orange-200">Home</Link></li>
+                                <li><Link to="/play" className="no-underline text-orange-200">Play</Link></li>
+                                <li><Link to="/shop" className="no-underline text-orange-200">Shop</Link></li>
+                                <li><Link to="/leaderboard" className="no-underline text-orange-200">Leaderboard</Link></li>
                                 {isAuthenticated ? (
                                     <>
-                                      <li><Link to="/logout" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } } ) }>Logout</Link></li>
-                                      <h2>{user.nickname}</h2>
+                                      <li><Link to="/logout" className="no-underline text-orange-200" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } } ) }>Logout</Link></li>
                                     </>
                                 ) : (
                                     <>
-                                        <li><Link to="/login" onClick={() => loginWithRedirect()}> Login</Link></li>
+                                        <li><Link to="/login" className="no-underline text-orange-200" onClick={() => loginWithRedirect()}> Login</Link></li>
                                     </>
                                 )}</ul>
 

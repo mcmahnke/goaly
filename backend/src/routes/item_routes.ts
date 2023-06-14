@@ -63,7 +63,6 @@ export function ItemRoutesInit(app: FastifyInstance) {
 		itemToChange.price = price;
 		itemToChange.description = description;
 
-		// Reminder -- this is how we persist our JS object changes to the database itself
 		await req.em.flush();
 		reply.send(itemToChange);
 	});
@@ -73,7 +72,6 @@ export function ItemRoutesInit(app: FastifyInstance) {
 		const { my_id, id_to_delete, password } = req.body;
 
 		try {
-			// Authenticate my user's role
 			const me = await req.em.findOneOrFail(User, my_id, {strict: true});
 
 			// Make sure the requester is an Admin

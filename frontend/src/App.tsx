@@ -1,7 +1,7 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter } from "react-router-dom";
-import "@css/App.css";
 import {GoalyRouter} from "@/GoalyRoutes.tsx";
+import "@css/GoalyStyles.css";
 
 
 

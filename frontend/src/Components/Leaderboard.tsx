@@ -14,12 +14,12 @@ export const Leaderboard = () => {
 	}, [users]);
 	
 	return (
-		<div>
-			<h1>Leaderboard</h1>
+		<div className="flex flex-col items-center">
+			<h1 className="text-5xl">Leaderboard</h1>
 			{users ? (
 				<ol>
 					{users.map((aUser: { name: string, wins: number }) => (
-						<li>
+						<li className="text-xl mb-5">
 							{" "}
 							{aUser.name} - {aUser.wins}
 						</li>

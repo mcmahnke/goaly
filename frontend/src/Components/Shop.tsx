@@ -88,12 +88,12 @@ export const Shop = () => {
 		}, [user]);
 
 		return (
-			<div>
-				<h2>Items:</h2>
+			<div className="flex flex-col items-center">
+				<h2 className="text-4xl">Items:</h2>
 				{items ? (
 					<ul>
 						{items.map((item: { id: number; name: string; price: number; description: string }) => (
-							<li key={item.name}>
+							<li key={item.name} className="mb-5 text-xl">
 								{" "}
 								{handleCheck(item.id) ?
 									<>
