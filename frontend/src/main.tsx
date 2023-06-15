@@ -14,7 +14,7 @@ ReactDOM.createRoot(rootContainer).render(
 			useRefreshTokensFallback={false}
 			authorizationParams={{
 				audience: "http://localhost:8080",
-				redirect_uri: "http://localhost:5173"
+				redirect_uri: "http://localhost:88"
 			}}
 		>
 			<App />

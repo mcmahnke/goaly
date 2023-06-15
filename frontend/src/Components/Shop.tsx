@@ -12,7 +12,7 @@ export const Shop = () => {
 	const [currentItem, setCurrentItem] = useState({});
 	const [itemsOwned, setItemsOwned] = useState([]);
 	const [items, setItems] = useState([]);
-	const { user } = useAuth0();
+	const { user, getAccessTokenSilently } = useAuth0();
 
 	const onBuyButtonClick = async (item_id: number, price: number) => {
 		try {

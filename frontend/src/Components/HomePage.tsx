@@ -7,11 +7,12 @@ import {useEffect, useState} from "react";
 export const Home = () => {
 	
 	const [currentUser, setCurrentUser] = useState<UserType>();
-	const { user, isAuthenticated } = useAuth0();
+	const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 	
 	async function checkUser() {
 		console.log(user.email);
 		try {
+			const token = getAccessTokenSilently();
 			const response = await httpClient.search("/users", { email: user.email });
 			console.log("Search succeeded: ", response.data);
 			return response.data;
